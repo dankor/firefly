@@ -37,6 +37,7 @@ order_test_db=test.db
 ## connection/order_test_db.yaml
 
 ```yaml
+description: yet another DB connection
 alchemy_string: "sqlite:///{db_path}"
 variables:
   db_path: order_test_db
@@ -45,6 +46,7 @@ variables:
 ## dataset/order_test_all.yaml
 
 ```yaml
+description: yet another dataset
 query: select * from order
 database: order_test_db
 ```
@@ -52,6 +54,7 @@ database: order_test_db
 ## representation/order_test_table.yaml
 
 ```yaml
+description: yet another table
 type: table
 dataset: order_test_all
 ```
@@ -59,7 +62,7 @@ dataset: order_test_all
 ## dashboard/order_summary.yaml
 
 ```yaml
-tbd
+description: yet another dashboard
 ```
 
 # Implementation
