@@ -38,9 +38,7 @@ order_test_db=test.db
 
 ```yaml
 description: yet another DB connection
-alchemy_string: "sqlite:///{db_path}"
-variables:
-  db_path: order_test_db
+alchemy_string: "sqlite:///{order_test_db}" # {variable_name} will replace it with the corresponding .env value
 ```
 
 ## dataset/order_test_all.yaml
@@ -63,6 +61,7 @@ dataset: order_test_all
 
 ```yaml
 description: yet another dashboard
+# tbd
 ```
 
 # Implementation
