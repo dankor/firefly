@@ -18,7 +18,7 @@ While Superset shows promise, it is not without its limitations. It is highly UI
 
 The concept is straightforward: develop an application to parse YAML files and generate reports without relying on a user interface. Ideally, the UI should be optional. By "report," I mean we need to handle the following entities:
 
-- Secrets (sensitive data)
+- Secret (sensitive data)
 - Connection (database connection details)
 - Dataset (query definition)
 - Representation (data visualization)
@@ -31,40 +31,39 @@ This is quite similar to Superset's functionality, but the objective is to enhan
 ## .env
 
 ```
-order_test_db=test.db
+order_db=order.db
 ```
 
-## connection/order_test_db.yaml
+## order.yaml
 
 ```yaml
-description: yet another DB connection
-alchemy_string: "sqlite:///{order_test_db}" # {variable_name} will replace it with the corresponding .env value
+connections:
+  - name: order_sqlite
+    description: yet another DB connection
+    alchemy_string: "sqlite:///{order_db}" # {variable_name} will replace it with the corresponding .env value
+datasets:
+  - name: order_all
+    description: yet another dataset
+    query: select * from order
+    connection: order_sqlite
+representations:
+  - name: order_table
+    description: yet another table
+    type: table
+    dataset: order_all
+dashboards:
+  - name: order_summary
+    description: yet another dashboard
+    layout:
+      - type: banner
+        text: My first firefly dashboard
+      - type: representation
+        representation: order_test_table
 ```
 
-## dataset/order_test_all.yaml
+That's it. It should be enough to build a report.
 
-```yaml
-description: yet another dataset
-query: select * from order
-database: order_test_db
-```
-
-## representation/order_test_table.yaml
-
-```yaml
-description: yet another table
-type: table
-dataset: order_test_all
-```
-
-## dashboard/order_summary.yaml
-
-```yaml
-description: yet another dashboard
-# tbd
-```
-
-# Implementation
+# POC implementation
 
 - Secrets will be stored in .env file.
 - Connections will utilize SQLAlchemy.
