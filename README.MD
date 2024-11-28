@@ -106,6 +106,7 @@ Library:
 - [ ] Plain file support (csv)
 - [ ] Add more charts (pie, bar, line, big number)
 - [ ] Modular approuch to create/update charts
+- [ ] Filter widget support
 - [ ] Import validation
 - [ ] Error handling
 - [ ] Customizable widget layout system
