@@ -1,0 +1,26 @@
+connections:
+  - name: order_sqlite
+    description: yet another DB connection
+    type: alchemy
+    config:
+        url: "sqlite:///orders.db"
+datasets:
+  - name: order_all
+    description: yet another dataset
+    query: select * from "order"
+    connection: order_sqlite
+charts:
+  - name: order_table
+    description: yet another table
+    type: table
+    dataset: order_all
+dashboards:
+  - name: order_summary
+    description: yet another dashboard
+    widgets:
+      - type: banner
+        config: 
+            text: My first firefly dashboard
+      - type: chart
+        config:
+            chart: order_table

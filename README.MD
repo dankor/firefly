@@ -21,7 +21,7 @@ The concept is straightforward: develop an application to parse YAML files and g
 - Secret (sensitive data)
 - Connection (database connection details)
 - Dataset (query definition)
-- Representation (data visualization)
+- Chart (data visualization)
 - Dashboard (a combination of visualizations)
 
 This is quite similar to Superset's functionality, but the objective is to enhance the code-driven reporting aspect.
@@ -40,13 +40,15 @@ order_db=order.db
 connections:
   - name: order_sqlite
     description: yet another DB connection
-    alchemy_string: "sqlite:///{order_db}" # {variable_name} will replace it with the corresponding .env value
+    type: alchemy
+    config:
+        url: "sqlite:///orders.db"
 datasets:
   - name: order_all
     description: yet another dataset
-    query: select * from order
+    query: select * from "order"
     connection: order_sqlite
-representations:
+charts:
   - name: order_table
     description: yet another table
     type: table
@@ -54,11 +56,13 @@ representations:
 dashboards:
   - name: order_summary
     description: yet another dashboard
-    layout:
+    widgets:
       - type: banner
-        text: My first firefly dashboard
-      - type: representation
-        representation: order_test_table
+        config: 
+            text: My first firefly dashboard
+      - type: chart
+        config:
+            chart: order_table
 ```
 
 That's it. It should be enough to build a report.
@@ -68,5 +72,56 @@ That's it. It should be enough to build a report.
 - Secrets will be stored in .env file.
 - Connections will utilize SQLAlchemy.
 - Datasets will be represented as Pandas dataframes.
-- Representations and dashboards will be a mix of HTML and CSS.
+- Charts and dashboards will be a mix of HTML and CSS.
 - Jupyter Notebook will serve as the IDE for development.
+
+# Playgroud
+
+Download this repository and run:
+
+```sh
+docker-compose up -d --build
+```
+
+You can create a sqllite database/table using [this](http://localhost:8888/lab/workspaces/auto-q/tree/import_orders.ipynb) notebook.
+
+In the [playgroud](http://localhost:8888/lab/workspaces/auto-q/tree/firefly_orders.ipynb) notebook you can see the following stages:
+
+- Import a configuration (yaml file).
+- List all imported items using *.list()* method.
+- Fire *.show_chart('chart_name')* to display a single chart.
+- Plus, *.show_dashboard('dashboard_name')* to see the whole dashboard.
+
+# Road map
+
+Library:
+
+- [ ] Secrets support
+- [x] SQL Alchemy connections
+- [x] Pandas datasets
+- [x] Table chart
+- [x] Jupyter support
+- [ ] Plain file support (csv)
+- [ ] Add more charts (pie, bar, line, big number)
+- [ ] Modular approuch to create/update charts
+- [ ] Import validation
+- [ ] Error handling
+- [ ] Customizable widget layout system
+
+Web client:
+
+- [ ] DB to store items
+- [ ] API to import configurations
+- [ ] API to manage items
+- [ ] UI to list all items
+- [ ] UI to render items
+- [ ] Cache management
+- [ ] User management
+- [ ] User auth support
+- [ ] Permission management
+- [ ] Exports
+- [ ] Query editor
+- [ ] Data quality
+- [ ] Alerts
+- [ ] Secret management
+- [ ] UI contructor

@@ -1,0 +1,11 @@
+services:
+  jupyter:
+    image: jupyter/minimal-notebook
+    build:
+        context: .
+        dockerfile: jupyter/Dockerfile
+    volumes:
+      - ./jupyter/notebooks:/home/jovyan/
+    ports:
+      - 8888:8888
+    command: "start-notebook.sh --NotebookApp.token="
