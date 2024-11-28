@@ -92,6 +92,8 @@ In the [playgroud](http://localhost:8888/lab/workspaces/auto-q/tree/firefly_orde
 - Fire *.show_chart('chart_name')* to display a single chart.
 - Plus, *.show_dashboard('dashboard_name')* to see the whole dashboard.
 
+![Playgroud](firefly_playgroud.png)
+
 # Road map
 
 Library:
@@ -125,3 +127,4 @@ Web client:
 - [ ] Alerts
 - [ ] Secret management
 - [ ] UI contructor
+
